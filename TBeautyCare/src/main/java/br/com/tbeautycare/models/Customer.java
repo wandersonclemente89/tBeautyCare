@@ -1,46 +1,86 @@
 package br.com.tbeautycare.models;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
 
 @Entity
+@Table(name = "CUSTOMER")
 public class Customer {
 
-	@Id
-	private String customerEmail;
-	private String customerName;
-	private String customerPhoneNumber;
-	private String customerPassword;
+	@Id 
+	@GeneratedValue
+	@Column(name = "CUST_ID")
+	private long id;
+	
+	@Email
+	@Column(name = "CUST_EMAIL")
+	private String email;
+	
+	@Column(name = "CUST_NAME")
+	private String name;
+	
+	@Column(name = "CUST_PHONENUMBER")
+	private String phoneNumber;
+	
+	@Column(name = "CUST_PASSWORD")
+	private String password;
+	
+//	@OneToOne(cascade = CascadeType.ALL, mappedBy = "id") 
+//	@JoinColumn(name = "FK_CONT", nullable = true)
+//	private Contact contact;
+//
+//	public Contact getContact() {
+//		return contact;
+//	}
+//
+//	public void setContact(Contact contact) {
+//		this.contact = contact;
+//	}
 
-	public String getCustomerEmail() {
-		return customerEmail;
+	public long getId() {
+		return id;
 	}
 
-	public void setCustomerEmail(String customerEmail) {
-		this.customerEmail = customerEmail;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public String getCustomerName() {
-		return customerName;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getCustomerPhoneNumber() {
-		return customerPhoneNumber;
+	public String getName() {
+		return name;
 	}
 
-	public void setCustomerPhoneNumber(String customerPhoneNumber) {
-		this.customerPhoneNumber = customerPhoneNumber;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getCustomerPassword() {
-		return customerPassword;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setCustomerPassword(String customerPassword) {
-		this.customerPassword = customerPassword;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }
