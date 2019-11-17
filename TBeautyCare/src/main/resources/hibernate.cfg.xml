@@ -14,5 +14,8 @@
 		<property name="show_sql">true</property>
 		
 		<mapping class="br.com.tbeautycare.models.Customer" />
+		<mapping class="br.com.tbeautycare.models.Contact" />
+		<mapping class="br.com.tbeautycare.models.Offer" />
+		<mapping class="br.com.tbeautycare.models.Schedule" />
 	</session-factory>
 </hibernate-configuration>

@@ -5,23 +5,43 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "CONTACT")
 public class Contact {
 
-	@Id 
-	@GeneratedValue
-	@Column(name = "CONT_ID")
+	@Id
+	@GeneratedValue 
+	@Column(name = "CONT_ID", table = "CONTACT")
 	private long id;
+
+	@Column(name = "CONT_ADDRESS", table = "CONTACT")
 	private String address;
+
+	@Email
+	@Column(name = "CONT_EMAIL", table = "CONTACT")
 	private String email;
+
+	@Column(name = "CONT_TELEPHONE_NUMBER", table = "CONTACT")
 	private String telephoneNumber;
+
+	@Column(name = "CONT_CITY", table = "CONTACT")
 	private String city;
+
+	@Column(name = "CONT_STATE", table = "CONTACT")
 	private String state;
+
+	@Column(name = "CONT_COUNTRY", table = "CONTACT")
 	private String country;
+
+	@Column(name = "CONT_ZIP_CODE", table = "CONTACT")
 	private String zipCode;
 
+	@JsonIgnore
 	public long getId() {
 		return id;
 	}
@@ -29,6 +49,7 @@ public class Contact {
 	public void setId(long id) {
 		this.id = id;
 	}
+
 	public String getAddress() {
 		return address;
 	}

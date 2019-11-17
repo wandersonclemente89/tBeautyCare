@@ -8,8 +8,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import br.com.tbeautycare.HttpResponseCode;
 import br.com.tbeautycare.dao.CustomerDAO;
@@ -19,12 +21,13 @@ import br.com.tbeautycare.models.ErrorRepresentation;
 @Path("customer")
 public class CustomerService {
 
-	private CustomerDAO dao;
+	private CustomerDAO custumerDao;
 	private ErrorRepresentation error;
-
+	@Context
+	UriInfo uriInfo;
 
 	public CustomerService() {
-		dao = new CustomerDAO();
+		custumerDao = new CustomerDAO();
 		error = new ErrorRepresentation();
 	}
 
@@ -32,7 +35,7 @@ public class CustomerService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/")
 	public Response readAll() {
-		return Response.status(HttpResponseCode.OK).entity(dao.readAll()).header("Access-Control-Allow-Origin", "*")
+		return Response.status(HttpResponseCode.OK).entity(custumerDao.readAll()).header("Access-Control-Allow-Origin", "*")
 				.header("Access-Control-Request-Methods", "GET").allow("OPTIONS").build();
 	}
 
@@ -41,9 +44,10 @@ public class CustomerService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/")
 	public Response insertCustomer(Customer customer) {
-		dao.insert(customer);
-		return Response.status(HttpResponseCode.CREATED).entity(customer).header("Access-Control-Allow-Origin", "*")
-				.header("Access-Control-Request-Methods", "POST").allow("OPTIONS").build();
+		custumerDao.insert(customer);
+			return Response.status(HttpResponseCode.CREATED).entity(customer).header("Access-Control-Allow-Origin", "*")
+					.header("Access-Control-Request-Methods", "POST").allow("OPTIONS").build();
+		
 	}
 
 	@DELETE
@@ -51,9 +55,14 @@ public class CustomerService {
 	@Path("/{id}")
 	public Response removeCustomer(@PathParam("id") long id) {
 		try {
-			dao.remove(dao.getById(id));
+			Customer customer = custumerDao.getById(id);
+			if ( customer!=null) {
+			custumerDao.remove(customer);
 			return Response.status(HttpResponseCode.NO_CONTENT).header("Access-Control-Allow-Origin", "*")
 					.header("Access-Control-Request-Methods", "DELETE").allow("OPTIONS").build();
+			}else {
+				throw new NoResultException();
+			}
 		} catch (NoResultException e) {
 			error.setCode(HttpResponseCode.NOT_FOUND);
 			error.setReason("CUSTOMER_NOT_FOUND");
@@ -68,8 +77,13 @@ public class CustomerService {
 	@Path("/{id}")
 	public Response geCustomerById(@PathParam("id") long id) {
 		try {
-			return Response.status(HttpResponseCode.OK).entity(dao.getById(id)).header("Access-Control-Allow-Origin", "*")
-					.header("Access-Control-Request-Methods", "GET").allow("OPTIONS").build();
+			Customer customer = custumerDao.getById(id);
+			if (customer != null) {
+				return Response.status(HttpResponseCode.OK).entity(customer).header("Access-Control-Allow-Origin", "*")
+						.header("Access-Control-Request-Methods", "GET").allow("OPTIONS").build();
+			} else {
+				throw new NoResultException();
+			}
 		} catch (NoResultException e) {
 			error.setCode(HttpResponseCode.NOT_FOUND);
 			error.setReason("CUSTOMER_NOT_FOUND");
@@ -78,4 +92,5 @@ public class CustomerService {
 					.header("Access-Control-Request-Methods", "GET").allow("OPTIONS").build();
 		}
 	}
+
 }

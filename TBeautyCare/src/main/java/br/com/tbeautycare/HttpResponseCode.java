@@ -9,4 +9,5 @@ public class HttpResponseCode {
 	public final static int BAD_REQUEST = 400;
 	public final static int UNAUTHORIZED = 401;
 	public final static int FORBBIDEN = 403;
+	public final static int INTERNAL_SERVER_ERROR = 500;
 }
