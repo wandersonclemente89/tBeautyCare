@@ -9,12 +9,13 @@ public class BaseDAO {
 
 	private SessionFactory factory;
 	private Session session;
+	private Transaction tx;
 	
 
 	public BaseDAO() {
 		factory = new Configuration().configure().buildSessionFactory();
 		session = factory.openSession();
-		
+		setTx(getSession().beginTransaction());
 	}
 
 	public SessionFactory getFactory() {
@@ -31,6 +32,14 @@ public class BaseDAO {
 
 	public void setSession(Session session) {
 		this.session = session;
+	}
+
+	public Transaction getTx() {
+		return tx;
+	}
+
+	public void setTx(Transaction tx) {
+		this.tx = tx;
 	}
 
 

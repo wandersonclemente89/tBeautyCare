@@ -13,28 +13,28 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 
 @Entity
 @Table(name = "SCHEDULE")
 @JsonInclude(value = Include.NON_NULL)
 public class Schedule {
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private Collection<Offer> offers;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "SCHED_DATE", unique = true)
-	private Date date;
-
 	@Id
 	@GeneratedValue
 	@Column(name = "SCHED_ID")
 	private long id;
 
-	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "SCHED_DATE", unique = true)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone="GMT-3")
+	private Date date;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private Collection<Offer> offers;
+
 	public long getId() {
 		return id;
 	}

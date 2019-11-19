@@ -1,14 +1,11 @@
 package br.com.tbeautycare.models;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -19,6 +16,12 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value = Include.NON_NULL)
 public class Offer {
 
+	
+	@Id
+	@GeneratedValue
+	@Column(name = "OFFER_ID")
+	private long id;
+	
 	@Column(name = "OFFER_NAME")
 	private String name;
 
@@ -31,14 +34,6 @@ public class Offer {
 	@Column(name = "OFFER_DURATION_TIME")
 	private int durationTime;
 
-	@Id
-	@GeneratedValue
-	@Column(name = "OFFER_ID")
-	private long id;
-
-	@ManyToMany(cascade = CascadeType.ALL)
-	private Collection<Schedule> schedules;
-
 	public int getDurationTime() {
 		return durationTime;
 	}
@@ -46,15 +41,6 @@ public class Offer {
 	public void setDurationTime(int durationTime) {
 		this.durationTime = durationTime;
 	}
-
-	public Collection<Schedule> getSchedules() {
-		return schedules;
-	}
-
-	public void setSchedules(Collection<Schedule> schedules) {
-		this.schedules = schedules;
-	}
-
 	
 	public long getId() {
 		return id;

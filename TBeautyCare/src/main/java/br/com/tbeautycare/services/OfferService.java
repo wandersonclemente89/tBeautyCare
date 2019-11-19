@@ -8,26 +8,22 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 import br.com.tbeautycare.HttpResponseCode;
-import br.com.tbeautycare.dao.CustomerDAO;
-import br.com.tbeautycare.models.Customer;
+import br.com.tbeautycare.dao.OfferDAO;
 import br.com.tbeautycare.models.ErrorRepresentation;
+import br.com.tbeautycare.models.Offer;
 
-@Path("customer")
-public class CustomerService {
+@Path("offer")
+public class OfferService {
 
-	private CustomerDAO custumerDao;
+	private OfferDAO offerDao;
 	private ErrorRepresentation error;
-	@Context
-	UriInfo uriInfo;
 
-	public CustomerService() {
-		custumerDao = new CustomerDAO();
+	public OfferService() {
+		offerDao = new OfferDAO();
 		error = new ErrorRepresentation();
 	}
 
@@ -35,7 +31,7 @@ public class CustomerService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/")
 	public Response readAll() {
-		return Response.status(HttpResponseCode.OK).entity(custumerDao.readAll()).header("Access-Control-Allow-Origin", "*")
+		return Response.status(HttpResponseCode.OK).entity(offerDao.readAll()).header("Access-Control-Allow-Origin", "*")
 				.header("Access-Control-Request-Methods", "GET").allow("OPTIONS").build();
 	}
 
@@ -43,18 +39,9 @@ public class CustomerService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/")
-	public Response insertCustomer(Customer customer) {
-//		
-//		OfferDAO offerDAO = new OfferDAO();
-//		List<Offer> offers =offerDAO.readAll(); 
-//		for (Offer offer : offers) {
-//			String name = offer.getName();
-//			customer.getSchedules().forEach(schedule->schedule.getOffers().forEach(offer1->
-//			offer1.getName().equals(name)));
-//		}
-//		
-custumerDao.insert(customer);
-			return Response.status(HttpResponseCode.CREATED).entity(customer).header("Access-Control-Allow-Origin", "*")
+	public Response insertCustomer(Offer offer) {
+		offerDao.insert(offer);
+			return Response.status(HttpResponseCode.CREATED).entity(offer).header("Access-Control-Allow-Origin", "*")
 					.header("Access-Control-Request-Methods", "POST").allow("OPTIONS").build();
 		
 	}
@@ -62,11 +49,11 @@ custumerDao.insert(customer);
 	@DELETE
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{id}")
-	public Response removeCustomer(@PathParam("id") long id) {
+	public Response removeOffer(@PathParam("id") long id) {
 		try {
-			Customer customer = custumerDao.getById(id);
-			if ( customer!=null) {
-			custumerDao.remove(customer);
+			Offer offer = offerDao.getById(id);
+			if ( offer!=null) {
+			offerDao.remove(offer);
 			return Response.status(HttpResponseCode.NO_CONTENT).header("Access-Control-Allow-Origin", "*")
 					.header("Access-Control-Request-Methods", "DELETE").allow("OPTIONS").build();
 			}else {
@@ -84,11 +71,11 @@ custumerDao.insert(customer);
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{id}")
-	public Response geCustomerById(@PathParam("id") long id) {
+	public Response geOfferById(@PathParam("id") long id) {
 		try {
-			Customer customer = custumerDao.getById(id);
-			if (customer != null) {
-				return Response.status(HttpResponseCode.OK).entity(customer).header("Access-Control-Allow-Origin", "*")
+			Offer offer = offerDao.getById(id);
+			if (offer != null) {
+				return Response.status(HttpResponseCode.OK).entity(offer).header("Access-Control-Allow-Origin", "*")
 						.header("Access-Control-Request-Methods", "GET").allow("OPTIONS").build();
 			} else {
 				throw new NoResultException();
