@@ -13,12 +13,13 @@ public class CustomerDAO extends BaseDAO {
 	public void insert(Customer customer) {
 		getSession().saveOrUpdate(customer);
 		getTx().commit();
+		getSession().close();
 	}
 
 	public void remove(Customer custumer) {
 		getSession().delete(custumer);
 		getTx().commit();
-
+		getSession().close();
 	}
 
 	public List<Customer> readAll() {

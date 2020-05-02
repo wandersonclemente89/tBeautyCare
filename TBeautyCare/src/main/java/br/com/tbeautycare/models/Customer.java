@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Table(name = "CUSTOMER")
 @JsonInclude(value = Include.NON_NULL)
 public class Customer {
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name = "CUST_ID")

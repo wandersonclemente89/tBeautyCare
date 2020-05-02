@@ -6,13 +6,13 @@
 	<session-factory>
 		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
 		<property name="hibernate.connection.password">root</property>
-		<property name="hibernate.connection.url">jdbc:mysql://localhost/TBEAUTYCAREAPP?characterEncoding=UTF-8</property>
+		<property name="hibernate.connection.url">jdbc:mysql://db:3306/TBEAUTYCAREAPP</property>
 		<property name="hibernate.connection.username">root</property>
-		<property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
-		<property name="hbm2ddl.auto">update</property>
-		
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.hbm2ddl.auto">update</property >
+
 		<property name="show_sql">true</property>
-		
+
 		<mapping class="br.com.tbeautycare.models.Customer" />
 		<mapping class="br.com.tbeautycare.models.Contact" />
 		<mapping class="br.com.tbeautycare.models.Offer" />

@@ -22,6 +22,7 @@ public class ScheduleDAO extends BaseDAO{
 		customer.setSchedules(currentSchedules);
 		getSession().saveOrUpdate(customer);
 		getTx().commit();
+		getSession().close();
 	}
 
 	public Schedule getById(long id) {
@@ -31,7 +32,7 @@ public class ScheduleDAO extends BaseDAO{
 
 	public void remove(Schedule schedule) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

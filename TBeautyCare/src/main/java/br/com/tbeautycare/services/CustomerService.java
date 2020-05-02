@@ -1,33 +1,31 @@
 package br.com.tbeautycare.services;
 
 import javax.persistence.NoResultException;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 import br.com.tbeautycare.HttpResponseCode;
 import br.com.tbeautycare.dao.CustomerDAO;
 import br.com.tbeautycare.models.Customer;
 import br.com.tbeautycare.models.ErrorRepresentation;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 
 @Path("customer")
 public class CustomerService {
 
-	private CustomerDAO custumerDao;
 	private ErrorRepresentation error;
 	@Context
 	UriInfo uriInfo;
 
 	public CustomerService() {
-		custumerDao = new CustomerDAO();
 		error = new ErrorRepresentation();
 	}
 
@@ -35,6 +33,7 @@ public class CustomerService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/")
 	public Response readAll() {
+		CustomerDAO custumerDao = new CustomerDAO();
 		return Response.status(HttpResponseCode.OK).entity(custumerDao.readAll()).header("Access-Control-Allow-Origin", "*")
 				.header("Access-Control-Request-Methods", "GET").allow("OPTIONS").build();
 	}
@@ -44,19 +43,20 @@ public class CustomerService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/")
 	public Response insertCustomer(Customer customer) {
-//		
+//
 //		OfferDAO offerDAO = new OfferDAO();
-//		List<Offer> offers =offerDAO.readAll(); 
+//		List<Offer> offers =offerDAO.readAll();
 //		for (Offer offer : offers) {
 //			String name = offer.getName();
 //			customer.getSchedules().forEach(schedule->schedule.getOffers().forEach(offer1->
 //			offer1.getName().equals(name)));
 //		}
-//		
+//
+CustomerDAO custumerDao = new CustomerDAO();
 custumerDao.insert(customer);
 			return Response.status(HttpResponseCode.CREATED).entity(customer).header("Access-Control-Allow-Origin", "*")
 					.header("Access-Control-Request-Methods", "POST").allow("OPTIONS").build();
-		
+
 	}
 
 	@DELETE
@@ -64,6 +64,7 @@ custumerDao.insert(customer);
 	@Path("/{id}")
 	public Response removeCustomer(@PathParam("id") long id) {
 		try {
+			CustomerDAO custumerDao = new CustomerDAO();
 			Customer customer = custumerDao.getById(id);
 			if ( customer!=null) {
 			custumerDao.remove(customer);
@@ -86,6 +87,7 @@ custumerDao.insert(customer);
 	@Path("/{id}")
 	public Response geCustomerById(@PathParam("id") long id) {
 		try {
+			CustomerDAO custumerDao = new CustomerDAO();
 			Customer customer = custumerDao.getById(id);
 			if (customer != null) {
 				return Response.status(HttpResponseCode.OK).entity(customer).header("Access-Control-Allow-Origin", "*")

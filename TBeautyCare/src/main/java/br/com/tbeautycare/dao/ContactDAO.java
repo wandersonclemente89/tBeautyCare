@@ -15,11 +15,13 @@ public class ContactDAO extends BaseDAO {
 	public void insert(Contact contact) {
 		getSession().saveOrUpdate(contact);
 		getTx().commit();
+		getSession().close();
 	}
 
 	public void remove(Contact contact) {
 		getSession().delete(contact);
 		getTx().commit();
+		getSession().close();
 	}
 
 	public List<Contact> readAll() {

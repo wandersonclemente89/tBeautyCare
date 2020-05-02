@@ -13,11 +13,13 @@ public class OfferDAO extends BaseDAO {
 	public void insert(Offer offer) {
 		getSession().saveOrUpdate(offer);
 		getTx().commit();
+		getSession().close();
 	}
 
 	public void remove(Offer offer) {
 		getSession().delete(offer);
 		getTx().commit();
+		getSession().close();
 	}
 
 	public List<Offer> readAll() {

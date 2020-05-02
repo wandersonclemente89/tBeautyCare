@@ -16,12 +16,12 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(value = Include.NON_NULL)
 public class Offer {
 
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name = "OFFER_ID")
 	private long id;
-	
+
 	@Column(name = "OFFER_NAME")
 	private String name;
 
@@ -41,7 +41,7 @@ public class Offer {
 	public void setDurationTime(int durationTime) {
 		this.durationTime = durationTime;
 	}
-	
+
 	public long getId() {
 		return id;
 	}

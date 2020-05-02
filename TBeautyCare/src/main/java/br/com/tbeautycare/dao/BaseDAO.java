@@ -10,7 +10,7 @@ public class BaseDAO {
 	private SessionFactory factory;
 	private Session session;
 	private Transaction tx;
-	
+
 
 	public BaseDAO() {
 		factory = new Configuration().configure().buildSessionFactory();

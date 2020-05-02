@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Contact {
 
 	@Id
-	@GeneratedValue 
+	@GeneratedValue
 	@Column(name = "CONT_ID", table = "CONTACT")
 	private long id;
 
